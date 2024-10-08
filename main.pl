@@ -19,7 +19,6 @@ limpar_terminal :-
 ).
 
 
-
 :- dynamic(logado/1).
 logado(false).
 
