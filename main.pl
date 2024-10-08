@@ -1,3 +1,12 @@
+/*
+================= Integrantes ===================
+ * Emanuel Thadeu Dos Santos Conrado Mat: 20220024070
+ * João Paulo Alves Leal Borges Mat: 20230156289
+ * José Alves de Oliveira Neto Mat: 20220023832
+=================================================
+*/
+
+
 %usuarios
 usuario('Emanuel', '123456').
 usuario('Joao Paulo', '123456').
