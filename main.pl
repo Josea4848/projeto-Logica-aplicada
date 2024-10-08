@@ -6,6 +6,8 @@
 =================================================
 */
 
+%módulo para sleep
+:- use_module(library(unix)).
 
 %usuarios
 usuario('Emanuel', '123456').
@@ -58,13 +60,31 @@ menu :-
     write('1. Menu de Recomendação'), nl,
     write('2. Sair'), nl,
     write('3. Fechar programa'), nl,
+    write('4. Para avaliação'), nl,
     read(Op),
     limpar_terminal,
     (   Op = 1 -> hub_de_busca;
         Op = 2 -> deslogar;
         Op = 3 -> fechar;
+        Op = 4 -> avaliacao;
         write('Opção inválida.'), nl, menu
     ).
+
+avaliacao :-
+    logado(true),
+    limpar_terminal,
+    write('=============== Avaliação ==============='), nl,
+    write('Nos dê uma nota de 0 a 10'), nl,
+    read(Op),
+    limpar_terminal,
+    (   Op < 4, Op > -1 -> write('Desculpa por não ter alcançado suas expectativa.'), nl; 
+        Op < 7, Op > 3 -> write('Obrigado pela avaliação, iremos melhorar o sistema.'), nl;
+        Op > 6, Op < 11 -> write('Estamos felizes por você ter gostado.'), nl;
+        write('Opção inválida. Tente novamente'), nl, sleep(2), avaliacao
+    ),
+    write('Voltando para o menu...'), nl,
+    sleep(3), 
+    menu.
 
 %Menu para exibir opções ao usuário
 hub_de_busca :- write('| Para recomendações por musica: \t recomendacao_musica(Nome_da_Musica, Relacionada).\n'), nl,
