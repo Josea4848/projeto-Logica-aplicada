@@ -1,8 +1,71 @@
-%musica
-%Cantor
-%Gênero
-%Álbum
+%usuarios
+usuario('Emanuel', '123456').
+usuario('Joao Paulo', '123456').
+usuario('Jose Alves', '123456').
 
+%limpa terminal
+limpar_terminal :-
+(   current_prolog_flag(unix, true) -> shell('clear')   
+;   shell('cls')                                     
+).
+
+
+
+:- dynamic(logado/1).
+logado(false).
+
+%Mensagem para usuário que foi deslogado
+deslogar :- retract(logado(true)),
+assertz(logado(false)),
+write("Deslogando..."), nl.
+
+%Mensagem inicial para usuário logado
+iniciar :- write("Bem vindo prologfy"), nl,
+login.
+
+%Encerra aplicação
+fechar :- 
+  write('Obrigado por usar prologfy'), nl,
+  halt.
+
+%Sistema de login de usuários
+login :-
+    write('Nome de usuário: '),
+    read(Usuario),
+    write('Senha: '),
+    read(Senha),
+    (   usuario(Usuario, Senha)
+    ->  retract(logado(false)), assertz(logado(true)),
+        write('Login bem-sucedido!'), nl,
+        menu;
+        write('Usuário ou senha incorretos.'), nl,
+        login
+    ).
+
+%Menu principal para usuário
+menu :-
+    logado(true),
+    limpar_terminal,
+    write('=============== Menu Principal ==============='), nl,
+    write('1. Menu de Recomendação'), nl,
+    write('2. Sair'), nl,
+    write('3. Fechar programa'), nl,
+    read(Op),
+    limpar_terminal,
+    (   Op = 1 -> hub_de_busca;
+        Op = 2 -> deslogar;
+        Op = 3 -> fechar;
+        write('Opção inválida.'), nl, menu
+    ).
+
+%Menu para exibir opções ao usuário
+hub_de_busca :- write('| Para recomendações por musica: \t recomendacao_musica(Nome_da_Musica, Relacionada).\n'), nl,
+write('| Para recomendações por gênero: \t recomendacao_genero(gênero_da_Musica, Relacionada).\n'), nl,
+write('| Para recomendações por cantor: \t recomendacao_cantor(Cantor, musica).\n'),nl,
+write('| Para exibir as músicas por álbum: \t exibe_album(Album, Musica).\n'),nl,
+write('| Para exibir músicas por ano:      \t recomendacao_por_ano(Ano, Musica).\n'),nl.
+
+    
 %Gênero
 genero('Blinding Lights', pop).
 genero('Shape of You', pop).
@@ -40,7 +103,6 @@ ano('Blinding Lights', 2019).
 ano('Shape of You', 2017).
 ano('Smells Like Teen Spirit', 1991).
 ano('Bohemian Rhapsody', 1975).
-ano('Rolling in the Deep', 2010).
 ano('Lose Yourself', 2002).
 ano('Levitating', 2020).
 ano('Hotel California', 1976).
@@ -131,5 +193,13 @@ getCantor(Cantor, Musica) :- cantor(Cantor, Musica).
 recomendacao_musica(Musica, Relacionada) :- genero(Musica, Genero), genero(Relacionada, Genero), Musica \= Relacionada,nl,
 write('| SpotPai Recomendação: |').
 
+recomendacao_cantor(Cantor, Musica) :- getCantor(Cantor, Musica), nl, 
+write('| SpotPai Recomendação: |').
+
 recomendacao_genero(Genero, Relacionada) :- genero(Relacionada, Genero),nl,
 write('| SpotPai Recomendação: |').
+
+recomendacao_por_ano(Ano, Musica) :- ano(Musica, Ano),nl,
+write('| SpotPai Recomendação: |').
+
+exibe_album(Album, Musica) :- getMusic(Album, Musica).
