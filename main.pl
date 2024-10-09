@@ -219,15 +219,15 @@ getMusic(Album, Musica) :- album(Album, Musica).
 getCantor(Cantor, Musica) :- cantor(Cantor, Musica).
 
 recomendacao_musica(Musica, Relacionada) :- genero(Musica, Genero), genero(Relacionada, Genero), Musica \= Relacionada,nl,
-write('| SpotPai Recomendação: |').
+write('| prologfy Recomendação: |').
 
 recomendacao_cantor(Cantor, Musica) :- getCantor(Cantor, Musica), nl, 
-write('| SpotPai Recomendação: |').
+write('| prologfy Recomendação: |').
 
 recomendacao_genero(Genero, Relacionada) :- genero(Relacionada, Genero),nl,
-write('| SpotPai Recomendação: |').
+write('| prologfy Recomendação: |').
 
 recomendacao_por_ano(Ano, Musica) :- ano(Musica, Ano),nl,
-write('| SpotPai Recomendação: |').
+write('| prologfy Recomendação: |').
 
 exibe_album(Album, Musica) :- getMusic(Album, Musica).
